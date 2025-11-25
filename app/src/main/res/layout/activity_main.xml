@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        android:contentDescription="TODO"
         android:padding="8dp"
         android:src="@drawable/ic_hamburguesa"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,223 +57,20 @@
             android:gravity="center"
             />
     </androidx.cardview.widget.CardView>
-    <LinearLayout
-        android:id="@+id/layoutBusqueda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/cardBienvenido"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp">
-        <!-- Texto izquierda -->
-        <TextView
-            android:id="@+id/txtBiblioteca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/biblioteca"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="0dp"
-            />
-        <EditText
-            android:id="@+id/eTBuscar"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/b_squeda"
-            android:textSize="26sp"
-            android:background="@color/contenedor"
-            android:textColor="@android:color/white"
-            />
-    </LinearLayout>
-    <!-- Título Pistas -->
-    <TextView
-        android:id="@+id/txtPlaylists"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pistas"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/layoutBusqueda"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="start"/>
-    <GridLayout
-        android:id="@+id/gridCanciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/txtPlaylists"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- ITEM 1 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:src="@drawable/diosa"
-                android:scaleType="centerCrop"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp">
-
-                <TextView
-                    android:text="Diosa"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:text="Lovers From The Past"
-                    android:textColor="@android:color/white"/>
-
-                <TextView
-                    android:text="Mareux"
-                    android:textColor="@android:color/white"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- ITEM 2 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:src="@drawable/withou"
-                android:scaleType="centerCrop"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp">
-
-                <TextView
-                    android:text="Canción 2"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:text="Álbum 2"
-                    android:textColor="@android:color/darker_gray"/>
-
-                <TextView
-                    android:text="Artista 2"
-                    android:textColor="@android:color/darker_gray"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- ITEM 3 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:src="@drawable/mareux"
-                android:scaleType="centerCrop"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp">
-
-                <TextView
-                    android:text="Canción 3"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:text="Álbum 3"
-                    android:textColor="@android:color/darker_gray"/>
-
-                <TextView
-                    android:text="Artista 3"
-                    android:textColor="@android:color/darker_gray"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- ITEM 4 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:src="@drawable/diosa"
-                android:scaleType="centerCrop"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp">
-
-                <TextView
-                    android:text="Canción 4"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:text="Álbum 4"
-                    android:textColor="@android:color/darker_gray"/>
-
-                <TextView
-                    android:text="Artista 4"
-                    android:textColor="@android:color/darker_gray"/>
-            </LinearLayout>
-        </LinearLayout>
-
-    </GridLayout>
     <!-- Título Playlist -->
     <TextView
         android:id="@+id/tVPlaylists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Playlists"
+        android:text="@string/playlists"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:paddingTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/gridCanciones"
+        app:layout_constraintTop_toBottomOf="@+id/cardBienvenido"
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="start"/>
 
@@ -329,7 +127,7 @@
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
-                    android:text="Diosa"
+                    android:text="@string/diosa"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -339,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Lovers From The Past"
+                    android:text="@string/lovers_from_the_past"
                     android:textColor="#888888"
                     android:textSize="12sp" />
 
@@ -347,7 +145,7 @@
                     android:id="@+id/tvMiniArtist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mareux"
+                    android:text="@string/mareux"
                     android:textColor="#888888"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -355,11 +153,11 @@
             <!-- Botón anterior -->
             <ImageButton
                 android:id="@+id/btnMiniPrevious"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Anterior"
+                android:contentDescription="@string/anterior"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_skip_previous"
                 app:layout_constraintBottom_toTopOf="@+id/miniSeekBar"
@@ -370,11 +168,11 @@
             <!-- Botón play/pause -->
             <ImageButton
                 android:id="@+id/btnMiniPlayPause"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="4dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Play/Pause"
+                android:contentDescription="@string/play_pause"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_play_arrow"
                 app:layout_constraintBottom_toTopOf="@+id/miniSeekBar"
@@ -385,11 +183,11 @@
             <!-- Botón siguiente -->
             <ImageButton
                 android:id="@+id/btnMiniNext"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Siguiente"
+                android:contentDescription="@string/siguiente"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_skip_next"
                 app:layout_constraintBottom_toTopOf="@+id/miniSeekBar"

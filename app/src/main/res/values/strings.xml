@@ -4,4 +4,11 @@
     <string name="b_squeda">Búsqueda</string>
     <string name="biblioteca">Biblioteca</string>
     <string name="pistas">Pistas</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="anterior">Anterior</string>
+    <string name="playlists">Playlists</string>
+    <string name="lovers_from_the_past">Lovers From The Past</string>
+    <string name="diosa">Diosa</string>
+    <string name="mareux">Mareux</string>
 </resources>
