@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CleanSound</string>
     <string name="bienvenido">Bienvenido/a</string>
+    <string name="b_squeda">Búsqueda</string>
+    <string name="biblioteca">Biblioteca</string>
+    <string name="pistas">Pistas</string>
 </resources>
