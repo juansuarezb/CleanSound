@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         // Inicializar el mini reproductor
         initMiniPlayer()
         setupMiniPlayerListeners()
+        setupPlaylistListener()
     }
 
     private fun initMiniPlayer() {
@@ -91,6 +92,16 @@ class MainActivity : AppCompatActivity() {
 
         // Deshabilitar interacción con la SeekBar (solo visual)
         miniSeekBar.setOnTouchListener { _, _ -> true }
+    }
+
+    private fun setupPlaylistListener() {
+        val tvPlaylists = findViewById<TextView>(R.id.tVPlaylists)
+
+        tvPlaylists.setOnClickListener {
+            val intent = Intent(this, PlaylistActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
     }
 
     // FUNCIÓN PRINCIPAL: Abrir la pantalla completa de reproducción

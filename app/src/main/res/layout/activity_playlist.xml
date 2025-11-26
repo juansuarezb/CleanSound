@@ -24,10 +24,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/logo"
-        android:background="@drawable/rounded_white"
         android:scaleType="centerCrop" />
 
-    <!-- Caja título -->
+<!-- Caja título -->
     <TextView
         android:id="@+id/tvTitlePlaylists"
         android:layout_width="250dp"
@@ -39,8 +38,7 @@
         android:text="Playlists"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:textSize="22sp"
-        android:background="@drawable/rounded_dark_card" />
+        android:textSize="22sp"/>
 
     <!-- CONTENEDOR SCROLL -->
     <ScrollView
