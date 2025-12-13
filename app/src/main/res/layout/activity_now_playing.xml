@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/bgPrincipal"
     tools:context=".NowPlayingActivity">
 
     <!-- Toolbar con título y botones -->
@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#000000"
+        android:background="@color/contenedor"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton

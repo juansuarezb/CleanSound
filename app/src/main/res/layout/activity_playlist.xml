@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@color/bgPrincipal">
 
     <!-- Ícono de menú -->
     <ImageView
@@ -201,7 +201,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:background="#121212">
+        android:background="@color/contenedor">
 
         <ImageView
             android:layout_width="55dp"

@@ -74,15 +74,13 @@
         app:layout_constraintStart_toStartOf="parent"
         android:gravity="start"/>
 
-
-    <!-- Mini Reproductor (Parte inferior fija) -->
     <androidx.cardview.widget.CardView
         android:id="@+id/miniPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:visibility="visible"
-        app:cardBackgroundColor="#1A1A1A"
+        app:cardBackgroundColor="@color/contenedor"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
