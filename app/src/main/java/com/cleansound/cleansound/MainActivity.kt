@@ -1,12 +1,12 @@
 package com.cleansound.cleansound
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    // Variables del mini reproductor
+    // Variables del mini reproduction
     private lateinit var miniPlayer: CardView
     private lateinit var ivMiniAlbumArt: ImageView
     private lateinit var tvMiniSongTitle: TextView
@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         tvMiniSongTitle.isSelected = true
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupMiniPlayerListeners() {
         // AL HACER CLICK EN EL MINI PLAYER → ABRE LA PANTALLA COMPLETA
         miniPlayer.setOnClickListener {

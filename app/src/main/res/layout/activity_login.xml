@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
@@ -14,6 +14,7 @@
         android:id="@+id/iVLogoInicio"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:contentDescription="@string/logo"
         android:src="@drawable/logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/saludos"
-        android:textSize="64dp"
+        android:textSize="64sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,17 +40,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/correo"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/tVMensajeBienvenida"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:textStyle="bold"
         />
     <EditText
         android:id="@+id/etCorreo"
         android:layout_width="0dp"
+        android:autofillHints=""
         android:background="@color/contenedor"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
@@ -57,13 +59,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        tools:ignore="LabelFor" />
     <TextView
         android:id="@+id/tvPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contrasena"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/etCorreo"
@@ -75,6 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/contenedor"
+        android:importantForAutofill="no"
         android:textColor="@android:color/white"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/tvPassword"
@@ -82,6 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        tools:ignore="LabelFor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
