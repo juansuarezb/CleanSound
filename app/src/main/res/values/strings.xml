@@ -11,4 +11,7 @@
     <string name="lovers_from_the_past">Lovers From The Past</string>
     <string name="diosa">Diosa</string>
     <string name="mareux">Mareux</string>
+    <string name="saludos">!Hola de nuevo!</string>
+    <string name="correo">Correo electrónico o nombre de usuario\n</string>
+    <string name="contrasena">Contraseña\n</string>
 </resources>
