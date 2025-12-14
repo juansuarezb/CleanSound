@@ -15,4 +15,6 @@
     <string name="correo">Correo electrónico o nombre de usuario\n</string>
     <string name="contrasena">Contraseña\n</string>
     <string name="logo">Logo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
