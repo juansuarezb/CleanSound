@@ -17,18 +17,21 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
 
     private var isPlaying = false
-
+    private lateinit var tvPlaylists: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         MusicPlayerManager.init(this)
+        tvPlaylists = findViewById(R.id.tVPlaylists)
+        tvPlaylists.setOnClickListener {
+            startActivity(Intent(this, PlaylistActivity::class.java))
+        }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.miniPlayerContainer, MiniPlayerFragment())
                 .commit()
         }
-
     }
 
 }
