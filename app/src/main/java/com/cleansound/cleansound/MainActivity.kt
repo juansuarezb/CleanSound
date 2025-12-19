@@ -29,9 +29,10 @@ class MainActivity : AppCompatActivity() {
         }
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.miniPlayerContainer, MiniPlayerFragment())
+                .replace(R.id.bottomPlayer, MiniPlayerFragment())
                 .commit()
         }
+
     }
 
 }

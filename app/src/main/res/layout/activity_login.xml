@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         />
     <TextView
         android:id="@+id/tVMensajeBienvenida"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iVLogoInicio"
-        android:layout_marginTop="@android:dimen/app_icon_size"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         />
     <TextView
@@ -51,16 +51,21 @@
     <EditText
         android:id="@+id/etCorreo"
         android:layout_width="0dp"
-        android:autofillHints=""
-        android:background="@color/contenedor"
         android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:padding="16dp"
+        android:background="@color/contenedor"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/tvCorreo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        tools:ignore="LabelFor" />
+        android:layout_marginTop="20dp"
+        tools:ignore="LabelFor"
+
+        />
     <TextView
         android:id="@+id/tvPassword"
         android:layout_width="wrap_content"
@@ -71,22 +76,60 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/etCorreo"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp" />
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:padding="16dp"
         android:background="@color/contenedor"
-        android:importantForAutofill="no"
         android:textColor="@android:color/white"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/tvPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+    <TextView
+        android:id="@+id/tvNoCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_tienes_cuenta"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="110dp"
+        />
+    <TextView
+        android:id="@+id/tvRegistrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Regístrate"
+        android:textSize="14sp"
+        android:textColor="@color/ancle"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvNoCuenta"
+        app:layout_constraintStart_toEndOf="@id/tvNoCuenta"
+        android:layout_marginStart="6dp"
+        />
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:text="@string/iniciar_sesion"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/boton"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        tools:ignore="LabelFor" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegistrate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
