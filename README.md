@@ -16,8 +16,8 @@
 
 </p>
 
-| Nombre          | Usuario de GitHub |
-|-----------------|-------------------|
+| Nombre          | Usuario de GitHub                                     |
+|-----------------|-------------------------------------------------------|
 | Carlos Morales  | [CarlosMorales07](https://github.com/CarlosMorales07) |
-| Juan Suaez      | [juansuarezb](https://github.com/juansuarezb) |
-| Alvaro Zumbana  | [greyhat](https://github.com/greyhat) |
+| Juan Suaez      | [juansuarezb](https://github.com/juansuarezb)         |
+| Alvaro Zumbana  | [greyhatbat](https://github.com/greyhatbat)           |
