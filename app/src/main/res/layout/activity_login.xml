@@ -15,7 +15,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:contentDescription="@string/logo"
-        android:src="@drawable/logo"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        tools:ignore="LabelFor"
+        tools:ignore="LabelFor,VisualLintTextFieldSize"
 
         />
     <TextView
@@ -91,7 +91,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        tools:ignore="VisualLintTextFieldSize" />
     <TextView
         android:id="@+id/tvNoCuenta"
         android:layout_width="wrap_content"
@@ -130,6 +131,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintTop_toBottomOf="@id/tvRegistrate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="VisualLintButtonSize" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
