@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cleansound.cleansound.R
 import model.Playlist
+import model.Song
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.bottomPlayer, MiniPlayerFragment())
                 .commit()
         }
-
         setupPlaylistsRecyclerView()
+        setupBibliotecaRecyclerView()
     }
 
     private fun setupPlaylistsRecyclerView() {
@@ -67,5 +68,16 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, PlaylistActivity::class.java)
         intent.putExtra("playlist", playlist)
         startActivity(intent)
+    }
+    private fun setupBibliotecaRecyclerView() {
+        val songs = listOf(
+            Song("1", "Song 1", "Artist 1", "Album 1", R.mipmap.ic_launcher),
+            Song("2", "Song 2", "Artist 2", "Album 2", R.mipmap.ic_launcher),
+            Song("3", "Song 3", "Artist 3", "Album 3", R.mipmap.ic_launcher)
+        )
+
+        val recyclerView = findViewById<RecyclerView>(R.id.rvBiblioteca)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = SongAdapter(songs)
     }
 }
