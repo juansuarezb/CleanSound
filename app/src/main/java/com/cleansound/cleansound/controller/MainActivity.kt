@@ -1,18 +1,14 @@
-package com.cleansound.cleansound
+package com.cleansound.cleansound.controller
 
-import MiniPlayerFragment
-import android.annotation.SuppressLint
+import com.cleansound.cleansound.controller.MiniPlayerFragment
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import service.MusicPlayerManager
+import com.cleansound.cleansound.controller.PlaylistActivity
+import com.cleansound.cleansound.R
 
 class MainActivity : AppCompatActivity() {
 

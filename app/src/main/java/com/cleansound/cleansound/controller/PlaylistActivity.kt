@@ -1,11 +1,10 @@
-package com.cleansound.cleansound
-import MiniPlayerFragment
+package com.cleansound.cleansound.controller
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
-import com.cleansound.cleansound.NowPlayingActivity
 import com.cleansound.cleansound.R
 
 class PlaylistActivity : AppCompatActivity() {
