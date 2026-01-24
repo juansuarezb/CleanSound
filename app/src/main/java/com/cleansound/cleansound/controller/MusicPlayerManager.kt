@@ -1,4 +1,4 @@
-package service
+package com.cleansound.cleansound.controller
 
 import android.content.Context
 import android.media.MediaPlayer
