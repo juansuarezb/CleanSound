@@ -112,10 +112,11 @@
         android:textSize="14sp"
         android:textColor="@color/ancle"
         android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBaseline_toBaselineOf="@id/tvNoCuenta"
         app:layout_constraintStart_toEndOf="@id/tvNoCuenta"
-        android:layout_marginStart="6dp"
-        />
+        android:layout_marginStart="6dp" />
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
