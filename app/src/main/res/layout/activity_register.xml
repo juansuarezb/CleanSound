@@ -25,7 +25,7 @@
         android:id="@+id/tVMensajeBienvenida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/saludos"
+        android:text="@string/bienvenido"
         android:textSize="64sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -93,22 +93,49 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"/>
     <TextView
+        android:id="@+id/tvRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_contraseña"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp" />
+    <EditText
+        android:id="@+id/etRepeatPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
+        android:padding="16dp"
+        android:background="@color/contenedor"
+        android:textColor="@android:color/white"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/tvRepeatPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"/>
+    <TextView
         android:id="@+id/tvNoCuenta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_tienes_cuenta"
+        android:text="@string/tienes_cuenta"
         android:textSize="14sp"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etRepeatPassword"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="110dp"
         />
     <TextView
-        android:id="@+id/tvRegistrate"
+        android:id="@+id/tvIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Regístrate"
+        android:text="@string/inicia_sesion"
         android:textSize="14sp"
         android:textColor="@color/ancle"
         android:textStyle="bold"
@@ -116,12 +143,13 @@
         android:focusable="true"
         app:layout_constraintBaseline_toBaselineOf="@id/tvNoCuenta"
         app:layout_constraintStart_toEndOf="@id/tvNoCuenta"
-        android:layout_marginStart="6dp" />
+        android:layout_marginStart="6dp"
+        />
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegistrarse"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:text="@string/iniciar_sesion"
+        android:text="@string/registrarse"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -129,7 +157,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@id/tvRegistrate"
+        app:layout_constraintTop_toBottomOf="@id/tvIniciarSesion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

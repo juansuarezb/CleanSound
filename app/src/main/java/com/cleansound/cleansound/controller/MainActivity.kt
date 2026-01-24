@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import service.MusicPlayerManager
+import com.cleansound.cleansound.controller.MusicPlayerManager
 import com.cleansound.cleansound.controller.PlaylistActivity
 import com.cleansound.cleansound.R
 

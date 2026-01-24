@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import service.MusicPlayerManager
+import com.cleansound.cleansound.controller.MusicPlayerManager
 import com.cleansound.cleansound.controller.NowPlayingActivity
 import com.cleansound.cleansound.R
 
