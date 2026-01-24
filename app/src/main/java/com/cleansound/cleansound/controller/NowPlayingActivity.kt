@@ -1,15 +1,16 @@
-package com.cleansound.cleansound
+package com.cleansound.cleansound.controller
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.cleansound.cleansound.R
 
 class NowPlayingActivity : AppCompatActivity() {
 

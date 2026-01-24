@@ -1,15 +1,15 @@
+package com.cleansound.cleansound.controller
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import com.cleansound.cleansound.MusicPlayerManager
-import com.cleansound.cleansound.MusicPlayerManager.isPlaying
-import com.cleansound.cleansound.NowPlayingActivity
+import service.MusicPlayerManager
+import com.cleansound.cleansound.controller.NowPlayingActivity
 import com.cleansound.cleansound.R
 
 class MiniPlayerFragment : Fragment(R.layout.fragment_mini_player) {

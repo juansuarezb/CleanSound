@@ -1,6 +1,9 @@
-package com.cleansound.cleansound
+package service
+
 import android.content.Context
 import android.media.MediaPlayer
+import com.cleansound.cleansound.R
+
 object MusicPlayerManager {
     private var mediaPlayer: MediaPlayer? = null
     fun init(context: Context) {
