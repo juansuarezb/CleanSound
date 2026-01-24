@@ -22,4 +22,7 @@
     <string name="error_email_required">Ingresa un correo</string>
     <string name="error_password_required">Ingresa una contraseña</string>
     <string name="error_password_min_length">Mínimo 8 caracteres</string>
+    <string name="repeat_contraseña">Repetir Contraseña</string>
+    <string name="tienes_cuenta">¿Ya tienes una cuenta?</string>
+    <string name="inicia_sesion">Inicia sesión</string>
 </resources>
