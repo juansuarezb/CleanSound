@@ -33,6 +33,12 @@
             android:name=".controller.RegisterActivity"
             android:exported="true">
         </activity>
+        <!-- Para Android 12 y menor -->
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+            android:maxSdkVersion="32" />
+
+        <!-- Para Android 13+ (API 33+) -->
+        <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     </application>
 
 </manifest>
