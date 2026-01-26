@@ -37,7 +37,7 @@
         android:id="@+id/tVMensajeBienvenida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bienvenido"
+        android:text="@string/registrarse"
         android:textSize="48dp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
