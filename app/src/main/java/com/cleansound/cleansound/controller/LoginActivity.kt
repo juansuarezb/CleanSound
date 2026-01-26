@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.cleansound.cleansound.controller.RegisterActivity
 import com.cleansound.cleansound.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var editTextEmail: EditText
     lateinit var editTextPassword: EditText
     lateinit var buttonLogin: Button
+    lateinit var buttonCerrar: Button
     lateinit var textViewRegistrarse: TextView
 
     private lateinit var auth: FirebaseAuth;
@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
         editTextPassword = findViewById(R.id.etPassword)
         buttonLogin = findViewById(R.id.btnLogin)
         textViewRegistrarse = findViewById(R.id.tvRegistrate)
+        buttonCerrar = findViewById(R.id.btnCerrar)
         auth = Firebase.auth
         //Eventos clic
         buttonLogin.setOnClickListener {
@@ -49,6 +50,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+        buttonCerrar.setOnClickListener {
+            cerrar()
+        }
+    }
+    fun cerrar(){
+        finishAffinity()
+        System.exit(0)
     }
 
     fun AutenticarUsuario(email: String, password: String) {
