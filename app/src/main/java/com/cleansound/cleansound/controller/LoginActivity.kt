@@ -51,14 +51,22 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         buttonCerrar.setOnClickListener {
+            limpiarCache()
             cerrar()
+        }
+    }
+    fun limpiarCache(){
+        try{
+            cacheDir.deleteRecursively()
+            Toast.makeText(this, "Cache borrado", Toast.LENGTH_SHORT).show()
+        }catch(e: Exception){
+            e.printStackTrace()
         }
     }
     fun cerrar(){
         finishAffinity()
         System.exit(0)
     }
-
     fun AutenticarUsuario(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
