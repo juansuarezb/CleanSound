@@ -51,7 +51,14 @@ class SongAdapter(
     }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        holder.bind(songs[position])
+        val song = songs[position]
+
+        holder.tvSongTitle.text = song.title
+        holder.tvSongArtist.text = song.artist
+        holder.tvSongDuration.text = song.getFormattedDuration()
+
+// Imagen por defecto (más adelante MediaStore)
+        holder.ivAlbumArt.setImageResource(R.drawable.ic_music_note)
     }
 
     override fun getItemCount(): Int = songs.size
