@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
 
         // Configurar RecyclerView de Playlists
         setupPlaylistsRecyclerView()
+        imageButtonMenu.setOnClickListener {
+            showPopupMenu(it)
+        }
 
         // Configurar RecyclerView de Biblioteca
         rvBiblioteca.layoutManager = LinearLayoutManager(
