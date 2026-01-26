@@ -28,9 +28,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rvPlaylists: RecyclerView
     private lateinit var rvBiblioteca: RecyclerView
 
+
     // MediaStore
     private lateinit var mediaStoreHelper: MediaStoreHelper
     private val songs = mutableListOf<Song>()
+    private lateinit var songAdapter: SongAdapter
 
     lateinit var textViewBiblioteca: TextView
     lateinit var imageButtonMenu: ImageButton
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            loadSongs()
+            cargarCanciones()
         } else {
             Toast.makeText(
                 this,
@@ -66,17 +68,26 @@ class MainActivity : AppCompatActivity() {
         setupPlaylistsRecyclerView()
 
         // Configurar RecyclerView de Biblioteca
-        rvBiblioteca.layoutManager = LinearLayoutManager(this)
+        rvBiblioteca.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        songAdapter = SongAdapter(songs) { song ->
+            onSongClick(song)
+        }
+        rvBiblioteca.adapter = songAdapter
+        cargarCanciones()
+    }
 
-        // Verificar y solicitar permisos para cargar canciones
-        checkAndRequestPermission()
-        textViewBiblioteca.setOnClickListener {
-            val intent = Intent(this, LibraryActivity::class.java)
-            startActivity(intent)
-        }
-        imageButtonMenu.setOnClickListener {
-            showPopupMenu(it)
-        }
+    private fun cargarCanciones() {
+        val mediaStoreHelper = MediaStoreHelper(this)
+        val nuevasCanciones = mediaStoreHelper.getAllSongs()
+
+        songs.clear()
+        songs.addAll(nuevasCanciones)
+
+        songAdapter.notifyDataSetChanged()
     }
 
     private fun setupPlaylistsRecyclerView() {
@@ -100,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         when {
             ContextCompat.checkSelfPermission(this, permission) ==
                     PackageManager.PERMISSION_GRANTED -> {
-                loadSongs()
+                cargarCanciones()
             }
             shouldShowRequestPermissionRationale(permission) -> {
                 Toast.makeText(
@@ -116,25 +127,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadSongs() {
-        // Obtener las 3 primeras canciones
-        songs.clear()
-        songs.addAll(mediaStoreHelper.getFirstThreeSongs())
 
-        if (songs.isEmpty()) {
-            Toast.makeText(
-                this,
-                "No se encontraron canciones en el dispositivo",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            // Configurar el adapter de biblioteca
-            val adapter = SongAdapter(songs) { song ->
-                onSongClick(song)
-            }
-            rvBiblioteca.adapter = adapter
-        }
-    }
 
     private fun onSongClick(song: Song) {
         // Por ahora solo mostramos un Toast
@@ -182,4 +175,6 @@ class MainActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
+
+
 }
