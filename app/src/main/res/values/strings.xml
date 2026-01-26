@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CleanSound</string>
-    <string name="bienvenido">Bienvenido/a</string>
     <string name="b_squeda">Búsqueda</string>
     <string name="biblioteca">Biblioteca</string>
     <string name="pistas">Pistas</string>
@@ -11,7 +10,6 @@
     <string name="lovers_from_the_past">Lovers From The Past</string>
     <string name="diosa">Diosa</string>
     <string name="mareux">Mareux</string>
-    <string name="saludos">!Hola de nuevo!</string>
     <string name="correo">Correo electrónico</string>
     <string name="contrasena">Contraseña\n</string>
     <string name="logo">Logo</string>
@@ -76,4 +74,5 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="login">Inicio de sesión</string>
 </resources>

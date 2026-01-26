@@ -25,8 +25,8 @@
         android:id="@+id/tVMensajeBienvenida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/saludos"
-        android:textSize="64sp"
+        android:text="@string/login"
+        android:textSize="48dp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,20 +78,47 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="20dp" />
-    <EditText
-        android:id="@+id/etPassword"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="56dp"
-        android:padding="16dp"
         android:background="@color/contenedor"
-        android:textColor="@android:color/white"
-        android:inputType="textPassword"
+        android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/tvPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp">
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivTogglePassword"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivTogglePassword"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_eye_closed"
+            android:tint="@android:color/white"
+            android:contentDescription="Mostrar/Ocultar contraseña"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/tvNoCuenta"
         android:layout_width="wrap_content"
@@ -99,7 +126,7 @@
         android:text="@string/no_tienes_cuenta"
         android:textSize="14sp"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/layoutPassword"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="110dp"
