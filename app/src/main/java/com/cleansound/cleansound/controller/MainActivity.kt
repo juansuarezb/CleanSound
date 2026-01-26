@@ -1,9 +1,14 @@
 package com.cleansound.cleansound.controller
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageButton
+import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +19,7 @@ import com.cleansound.cleansound.R
 import model.MediaStoreHelper
 import model.Song
 import com.cleansound.cleansound.controller.SongAdapter
-
-
-
-
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     // MediaStore
     private lateinit var mediaStoreHelper: MediaStoreHelper
     private val songs = mutableListOf<Song>()
+
+    lateinit var textViewBiblioteca: TextView
+    lateinit var imageButtonMenu: ImageButton
 
     // Launcher para solicitar permisos
     private val requestPermissionLauncher = registerForActivityResult(
@@ -51,7 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         // Inicializar MediaStore helper
         mediaStoreHelper = MediaStoreHelper(this)
-
+        textViewBiblioteca = findViewById(R.id.tVBiblioteca)
+        imageButtonMenu = findViewById(R.id.iBMenuHamburguesa)
         // Inicializar RecyclerViews
         rvPlaylists = findViewById(R.id.rvPlaylists)
         rvBiblioteca = findViewById(R.id.rvBiblioteca)
@@ -64,6 +70,13 @@ class MainActivity : AppCompatActivity() {
 
         // Verificar y solicitar permisos para cargar canciones
         checkAndRequestPermission()
+        textViewBiblioteca.setOnClickListener {
+            val intent = Intent(this, LibraryActivity::class.java)
+            startActivity(intent)
+        }
+        imageButtonMenu.setOnClickListener {
+            showPopupMenu(it)
+        }
     }
 
     private fun setupPlaylistsRecyclerView() {
@@ -130,5 +143,43 @@ class MainActivity : AppCompatActivity() {
             "Seleccionaste: ${song.title}",
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun showPopupMenu(anchor: View) {
+        val popupMenu = PopupMenu(this, anchor)
+        popupMenu.menuInflater.inflate(R.menu.menu_main, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_home -> {
+                    true
+                }
+
+                R.id.action_library -> {
+                    startActivity(Intent(this, LibraryActivity::class.java))
+                    true
+                }
+
+                R.id.action_profile -> {
+                    // TODO: ir a ProfileActivity
+                    true
+                }
+
+                R.id.action_salir -> {
+                    // Cerrar sesión
+                    cerrarSesion()
+                    true
+                }
+
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+    private fun cerrarSesion() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

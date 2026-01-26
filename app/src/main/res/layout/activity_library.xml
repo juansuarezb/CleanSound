@@ -3,27 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrincipal"
-    tools:context=".controller.MainActivity">
+    tools:context=".controller.LibraryActivity">
 
-    <!-- Botón hamburguesa -->
+    <!-- Botón volver -->
     <ImageButton
-        android:id="@+id/iBMenuHamburguesa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnBack"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@android:color/transparent"
-        android:padding="8dp"
-        android:src="@drawable/ic_hamburguesa"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="12dp"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="@android:color/white"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Logo -->
     <ImageView
-        android:id="@+id/iVLogoInicio"
+        android:id="@+id/iVLogoLibrary"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
@@ -32,34 +34,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Título Biblioteca -->
     <TextView
-        android:id="@+id/tVPlaylists"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/playlists"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iVLogoInicio" />
-
-    <!-- RecyclerView para Playlists (horizontal) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPlaylists"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="16dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:clipToPadding="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tVPlaylists" />
-
-    <TextView
-        android:id="@+id/tVBiblioteca"
+        android:id="@+id/tVBibliotecaTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Biblioteca"
@@ -68,23 +45,24 @@
         android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvPlaylists" />
+        app:layout_constraintTop_toBottomOf="@id/iVLogoLibrary" />
 
+    <!-- RecyclerView Biblioteca -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBiblioteca"
+        android:id="@+id/rvLibrary"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tVBiblioteca" />
+        app:layout_constraintTop_toBottomOf="@id/tVBibliotecaTitle"
+        app:layout_constraintBottom_toTopOf="@id/bottomPlayer" />
 
-
-    <!-- Por esto (temporalmente) -->
+    <!-- Mini Player -->
     <include
         android:id="@+id/bottomPlayer"
         layout="@layout/fragment_mini_player"
