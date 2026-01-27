@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cleansound.cleansound.R
-import model.Playlist
+import model.PlaylistDoc
 
 class PlaylistAdapter(
-    private val playlists: List<Playlist>,
-    private val onPlaylistClick: (Playlist) -> Unit
-) : RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {  // ← Fíjate aquí
+    private val playlists: List<PlaylistDoc>,
+    private val onPlaylistClick: (PlaylistDoc) -> Unit
+) : RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
     class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivCover: ImageView = itemView.findViewById(R.id.ivPlaylistCover)
@@ -22,19 +22,17 @@ class PlaylistAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.song, parent, false)
+            .inflate(R.layout.item_playlist, parent, false)
         return PlaylistViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         val playlist = playlists[position]
-        holder.ivCover.setImageResource(playlist.coverImage)
+        holder.ivCover.setImageResource(R.drawable.ic_music_note) // placeholder
         holder.tvName.text = playlist.name
-        holder.tvSongCount.text = "${playlist.songCount} canciones"
+        holder.tvSongCount.text = "${playlist.songs.size} canciones"
 
-        holder.itemView.setOnClickListener {
-            onPlaylistClick(playlist)
-        }
+        holder.itemView.setOnClickListener { onPlaylistClick(playlist) }
     }
 
     override fun getItemCount(): Int = playlists.size
