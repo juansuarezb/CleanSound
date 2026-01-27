@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/common_full_open_on_phone"
         android:scaleType="centerCrop" />
 
 <!-- Caja título -->
