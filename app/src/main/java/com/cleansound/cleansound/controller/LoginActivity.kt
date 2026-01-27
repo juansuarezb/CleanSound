@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.cleansound.cleansound.controller.RegisterActivity
 import com.cleansound.cleansound.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -19,8 +19,11 @@ class LoginActivity : AppCompatActivity() {
     lateinit var editTextEmail: EditText
     lateinit var editTextPassword: EditText
     lateinit var buttonLogin: Button
+    lateinit var buttonCerrar: Button
     lateinit var textViewRegistrarse: TextView
 
+    lateinit var togglePassword: ImageView
+    private var isPasswordVisible = false
     private lateinit var auth: FirebaseAuth;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +33,13 @@ class LoginActivity : AppCompatActivity() {
         editTextPassword = findViewById(R.id.etPassword)
         buttonLogin = findViewById(R.id.btnLogin)
         textViewRegistrarse = findViewById(R.id.tvRegistrate)
+        buttonCerrar = findViewById(R.id.btnCerrar)
+        togglePassword = findViewById(R.id.ivTogglePassword)
         auth = Firebase.auth
+        val extras = intent.extras ?: return
+        var usuario = extras.getString(EXTRA_LOGIN) ?:"Unknown"
+        usuario = usuario.substringBefore("@")
+        Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_SHORT).show()
         //Eventos clic
         buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString()
@@ -49,8 +58,44 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
-    }
+        buttonCerrar.setOnClickListener {
+            limpiarCache()
+            cerrar()
+        }
+        togglePassword.setOnClickListener {
+            if (isPasswordVisible) {
+                // Ocultar contraseña
+                editTextPassword.inputType =
+                    android.text.InputType.TYPE_CLASS_TEXT or
+                            android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 
+                togglePassword.setImageResource(R.drawable.ic_eye_closed)
+            } else {
+                // Mostrar contraseña
+                editTextPassword.inputType =
+                    android.text.InputType.TYPE_CLASS_TEXT or
+                            android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+
+                togglePassword.setImageResource(R.drawable.ic_eye_open)
+            }
+
+            // Mantener cursor al final
+            editTextPassword.setSelection(editTextPassword.text.length)
+            isPasswordVisible = !isPasswordVisible
+        }
+    }
+    fun limpiarCache(){
+        try{
+            cacheDir.deleteRecursively()
+            Toast.makeText(this, "Cache borrado", Toast.LENGTH_SHORT).show()
+        }catch(e: Exception){
+            e.printStackTrace()
+        }
+    }
+    fun cerrar(){
+        finishAffinity()
+        System.exit(0)
+    }
     fun AutenticarUsuario(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->

@@ -50,9 +50,7 @@ class SongAdapter(
         return SongViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        holder.bind(songs[position])
-    }
+    override fun onBindViewHolder(holder: SongViewHolder, position: Int) = holder.bind(songs[position])
 
     override fun getItemCount(): Int = songs.size
 }

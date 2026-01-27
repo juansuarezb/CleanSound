@@ -3,8 +3,10 @@ package com.cleansound.cleansound.controller
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var editTextRepeatPassword: EditText
     lateinit var buttonRegister: Button
     lateinit var textViewIniciarSesion: TextView
+    lateinit var buttonBackRegister: ImageButton
     private lateinit var auth: FirebaseAuth;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +29,15 @@ class RegisterActivity : AppCompatActivity() {
         editTextEmail = findViewById(R.id.etCorreo)
         editTextPassword = findViewById(R.id.etPassword)
         editTextRepeatPassword = findViewById(R.id.etRepeatPassword)
+        buttonBackRegister = findViewById(R.id.btnBackRegister)
         buttonRegister = findViewById(R.id.btnRegistrarse)
         textViewIniciarSesion = findViewById(R.id.tvIniciarSesion)
         auth = Firebase.auth
+        buttonBackRegister.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         buttonRegister.setOnClickListener {
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
@@ -77,42 +86,56 @@ class RegisterActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
     }
 
-    private fun validateRequiredData():Boolean{
-        val email = editTextEmail.text.toString()
-        val password = editTextPassword.text.toString()
-        val repeatPassword = editTextRepeatPassword.text.toString()
+    private fun validateRequiredData(): Boolean {
+        val email = editTextEmail.text.toString().trim()
+        val password = editTextPassword.text.toString().trim()
+        val repeatPassword = editTextRepeatPassword.text.toString().trim()
+
+        // Email vacío
         if (email.isEmpty()) {
-            editTextEmail.setError(getString(R.string.error_email_required))
+            editTextEmail.error = getString(R.string.error_email_required)
             editTextEmail.requestFocus()
             return false
         }
-        if(password.isEmpty()){
-            editTextPassword.setError(getString(R.string.error_password_required))
+
+        // Email inválido
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.error = getString(R.string.error_email_invalid)
+            editTextEmail.requestFocus()
+            return false
+        }
+
+        // Password vacío
+        if (password.isEmpty()) {
+            editTextPassword.error = getString(R.string.error_password_required)
             editTextPassword.requestFocus()
             return false
         }
-        if(repeatPassword.isEmpty()){
-            editTextRepeatPassword.setError(getString(R.string.error_password_required))
+
+        // Longitud mínima (recomendado 6 para Firebase)
+        if (password.length < 6) {
+            editTextPassword.error = getString(R.string.error_password_min_length)
+            editTextPassword.requestFocus()
+            return false
+        }
+
+        // Repeat password vacío
+        if (repeatPassword.isEmpty()) {
+            editTextRepeatPassword.error = getString(R.string.error_password_required)
             editTextRepeatPassword.requestFocus()
             return false
         }
-        if (password.length < 8) {
-            editTextPassword.setError(getString(R.string.error_password_min_length))
-            editTextPassword.requestFocus()
-            return false
-        }
-        if (repeatPassword.length < 8) {
-            editTextPassword.setError(getString(R.string.error_password_min_length))
-            editTextPassword.requestFocus()
-            return false
-        }
-        return true;
+
+        return true
     }
+
+
     private fun validatePasswords():Boolean{
         val password = editTextPassword.text.toString()
         val repeatPassword = editTextRepeatPassword.text.toString()
         if(password != repeatPassword){
-            editTextRepeatPassword.setError(getString(R.string.error_password_match))
+            editTextRepeatPassword.error = getString(R.string.error_password_match)
+            editTextRepeatPassword.requestFocus()
             return false
         }
         return true

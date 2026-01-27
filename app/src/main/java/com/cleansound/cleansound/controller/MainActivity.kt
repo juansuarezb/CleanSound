@@ -1,7 +1,9 @@
 package com.cleansound.cleansound.controller
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cleansound.cleansound.R
+import androidx.appcompat.view.menu.MenuBuilder
 import model.MediaStoreHelper
 import model.Song
 import com.cleansound.cleansound.controller.SongAdapter
@@ -29,13 +32,18 @@ class MainActivity : AppCompatActivity() {
     // MediaStore
     private lateinit var mediaStoreHelper: MediaStoreHelper
     private val songs = mutableListOf<Song>()
+    private lateinit var songAdapter: SongAdapter
+
+    lateinit var textViewBiblioteca: TextView
+    lateinit var textViewPlaylists: TextView
+    lateinit var imageButtonMenu: ImageButton
 
     // Launcher para solicitar permisos
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            loadSongs()
+            cargarCanciones()
         } else {
             Toast.makeText(
                 this,
@@ -51,6 +59,9 @@ class MainActivity : AppCompatActivity() {
 
         // Inicializar MediaStore helper
         mediaStoreHelper = MediaStoreHelper(this)
+        textViewBiblioteca = findViewById(R.id.tVBiblioteca)
+        textViewPlaylists = findViewById(R.id.tVPlaylists)
+        imageButtonMenu = findViewById(R.id.iBMenuHamburguesa)
 
         // Inicializar RecyclerViews
         rvPlaylists = findViewById(R.id.rvPlaylists)
@@ -59,10 +70,20 @@ class MainActivity : AppCompatActivity() {
         // Configurar RecyclerView de Playlists
         setupPlaylistsRecyclerView()
 
-        // Configurar RecyclerView de Biblioteca
-        rvBiblioteca.layoutManager = LinearLayoutManager(this)
+        imageButtonMenu.setOnClickListener {
+            showPopupMenu(it)
+        }
 
-        // Verificar y solicitar permisos para cargar canciones
+        // Configurar RecyclerView de Biblioteca
+        rvBiblioteca.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        songAdapter = SongAdapter(songs) { song ->
+            onSongClick(song)
+        }
+        rvBiblioteca.adapter = songAdapter
         checkAndRequestPermission()
         cargarEmail()
     }
@@ -74,8 +95,6 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-
-        // TODO: Aquí irá tu adapter de playlists cuando lo implementes
     }
 
     private fun checkAndRequestPermission() {
@@ -88,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         when {
             ContextCompat.checkSelfPermission(this, permission) ==
                     PackageManager.PERMISSION_GRANTED -> {
-                loadSongs()
+                cargarCanciones()
             }
             shouldShowRequestPermissionRationale(permission) -> {
                 Toast.makeText(
@@ -104,33 +123,56 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadSongs() {
-        // Obtener las 3 primeras canciones
-        songs.clear()
-        songs.addAll(mediaStoreHelper.getFirstThreeSongs())
-
-        if (songs.isEmpty()) {
-            Toast.makeText(
-                this,
-                "No se encontraron canciones en el dispositivo",
-                Toast.LENGTH_SHORT
-            ).show()
-        } else {
-            // Configurar el adapter de biblioteca
-            val adapter = SongAdapter(songs) { song ->
-                onSongClick(song)
-            }
-            rvBiblioteca.adapter = adapter
+    private fun onSongClick(song: Song) {
+        val songUri = try {
+            Uri.parse(song.uri)
+        } catch (e: Exception) {
+            Toast.makeText(this, "URI de canción no válida", Toast.LENGTH_SHORT).show()
+            return
         }
+        // Reproducir la canción
+        MusicPlayerManager.playSong(this, songUri)
+        // Abrir el reproductor completo
+        val intent = Intent(this, NowPlayingActivity::class.java)
+        startActivity(intent)
+
     }
 
-    private fun onSongClick(song: Song) {
-        // Por ahora solo mostramos un Toast
-        Toast.makeText(
+    private fun showPopupMenu(anchor: View) {
+        val popupMenu = PopupMenu(
             this,
-            "Seleccionaste: ${song.title}",
-            Toast.LENGTH_SHORT
-        ).show()
+            anchor,
+            Gravity.END,
+            0,
+            R.style.PopupMenuCleanSound
+        )
+
+        popupMenu.menuInflater.inflate(R.menu.menu_main, popupMenu.menu)
+
+        if (popupMenu.menu is MenuBuilder) {
+            (popupMenu.menu as MenuBuilder).setOptionalIconsVisible(true)
+
+        }
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_home -> true
+                R.id.action_salir -> {
+                    cerrarSesion()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun cerrarSesion() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
     private fun cargarEmail() {
         val db = Firebase.firestore

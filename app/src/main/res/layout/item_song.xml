@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="170dp"
+    android:layout_height="220dp"
     android:layout_margin="8dp"
     app:cardBackgroundColor="#1E1E1E"
     app:cardCornerRadius="12dp"
@@ -11,62 +11,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="227dp"
+        android:orientation="vertical"
         android:padding="12dp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="142dp">
 
-        <!-- Imagen del álbum -->
-        <ImageView
-            android:id="@+id/ivAlbumArt"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:background="@color/bgPrincipal"
-            android:src="@drawable/ic_music_note" />
+            <!-- Imagen del álbum -->
+            <ImageView
+                android:id="@+id/ivAlbumArt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bgPrincipal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_music_note" />
 
-        <!-- Información de la canción -->
-        <LinearLayout
-            android:layout_width="0dp"
+            <!-- Duración (encima de la imagen) -->
+            <TextView
+                android:id="@+id/tvSongDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="8dp"
+                android:text="3:45"
+                android:textColor="@color/design_default_color_surface"
+                android:textSize="12sp"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp" />
+
+        </FrameLayout>
+
+        <!-- Título de la canción -->
+        <TextView
+            android:id="@+id/tvSongTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Título de la canción"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvSongTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Título de la canción"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/tvSongArtist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Artista"
-                android:textColor="#B3B3B3"
-                android:textSize="14sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_marginTop="4dp" />
-
-        </LinearLayout>
+        <!-- Artista / Álbum -->
+        <TextView
+            android:id="@+id/tvSongArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Artista · Álbum"
+            android:textColor="#B3B3B3"
+            android:textSize="14sp" />
 
         <!-- Duración -->
-        <TextView
-            android:id="@+id/tvSongDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3:45"
-            android:textColor="#B3B3B3"
-            android:textSize="14sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp" />
+
 
     </LinearLayout>
 
