@@ -27,6 +27,8 @@
     <string name="error_password_match">La contraseña no coincide</string>
     <string name="playlist_cover">cover\n</string>
     <string name="cerrar">Cerrar</string>
+    <string name="error_email_invalid">Correo electrónico inválido</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
