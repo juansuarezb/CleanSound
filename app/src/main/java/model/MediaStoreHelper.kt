@@ -6,9 +6,6 @@ import android.provider.MediaStore
 
 class MediaStoreHelper(private val context: Context) {
 
-    /**
-     * Obtiene las primeras 3 canciones del dispositivo
-     */
     fun getFirstThreeSongs(): List<Song> {
         val songs = mutableListOf<Song>()
 

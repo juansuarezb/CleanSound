@@ -22,7 +22,6 @@ object MusicPlayerManager {
                 mediaPlayer = MediaPlayer().apply {
                     setOnPreparedListener { mp -> mp.start() }
                     setOnCompletionListener {
-                        // Aquí podrías notificar al UI o avanzar siguiente canción
                     }
                 }
             } else {
@@ -36,7 +35,6 @@ object MusicPlayerManager {
             Log.e("MusicPlayerManager", "Error reproduciendo canción", e)
         }
     }
-
     fun play() {
         mediaPlayer?.let { if (!it.isPlaying) it.start() }
     }

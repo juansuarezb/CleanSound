@@ -43,11 +43,6 @@ class LoginActivity : AppCompatActivity() {
             //Validaciones de datos requeridos y formatos
             if (!validateRequiredData())
                 return@setOnClickListener
-            //Si pasa validación de datos requeridos, ir a pantalla principal
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.putExtra(EXTRA_LOGIN, email)
-//            startActivity(intent)
-//            finish()
             AutenticarUsuario(email, clave)
         }
         textViewRegistrarse.setOnClickListener {
