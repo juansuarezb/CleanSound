@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +16,8 @@ import com.cleansound.cleansound.R
 import model.MediaStoreHelper
 import model.Song
 import com.cleansound.cleansound.controller.SongAdapter
-
-
-
-
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 
 class MainActivity : AppCompatActivity() {
@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         // Verificar y solicitar permisos para cargar canciones
         checkAndRequestPermission()
+        cargarEmail()
     }
 
     private fun setupPlaylistsRecyclerView() {
@@ -130,5 +131,21 @@ class MainActivity : AppCompatActivity() {
             "Seleccionaste: ${song.title}",
             Toast.LENGTH_SHORT
         ).show()
+    }
+    private fun cargarEmail() {
+        val db = Firebase.firestore
+
+        db.collection("users")
+            .limit(1) // solo trae uno
+            .get()
+            .addOnSuccessListener { result ->
+                if (!result.isEmpty) {
+                    val email = result.documents[0].getString("email")
+                    findViewById<TextView>(R.id.tVEmailUsuario).text = email
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("MAIN", "Error al cargar email", e)
+            }
     }
 }
