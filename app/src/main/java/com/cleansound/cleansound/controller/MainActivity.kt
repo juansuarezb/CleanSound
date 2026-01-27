@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var songAdapter: SongAdapter
 
     lateinit var textViewBiblioteca: TextView
+    lateinit var textViewPlaylists: TextView
     lateinit var imageButtonMenu: ImageButton
 
     // Launcher para solicitar permisos
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         // Inicializar MediaStore helper
         mediaStoreHelper = MediaStoreHelper(this)
         textViewBiblioteca = findViewById(R.id.tVBiblioteca)
+        textViewPlaylists = findViewById(R.id.tVPlaylists)
         imageButtonMenu = findViewById(R.id.iBMenuHamburguesa)
         // Inicializar RecyclerViews
         rvPlaylists = findViewById(R.id.rvPlaylists)
@@ -81,6 +83,18 @@ class MainActivity : AppCompatActivity() {
         }
         rvBiblioteca.adapter = songAdapter
         checkAndRequestPermission()
+        textViewBiblioteca.setOnClickListener {
+            val intent = Intent(this, LibraryActivity::class.java)
+            startActivity(intent)
+        }
+        textViewBiblioteca.setOnClickListener {
+            val intent = Intent(this, LibraryActivity::class.java)
+            startActivity(intent)
+        }
+        textViewPlaylists.setOnClickListener {
+            val intent = Intent(this, PlaylistActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun cargarCanciones() {
@@ -151,15 +165,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.action_library -> {
-                    startActivity(Intent(this, LibraryActivity::class.java))
-                    true
-                }
-
-                R.id.action_profile -> {
-                    // TODO: ir a ProfileActivity
-                    true
-                }
 
                 R.id.action_salir -> {
                     // Cerrar sesión

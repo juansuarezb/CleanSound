@@ -36,7 +36,6 @@
     <string name="previous">Previous</string>
     <!--MENU MAIN-->
     <string name="menu_main_home">Home</string>
-    <string name="menu_main_library">Library</string>
     <string name="menu_main_profile">Profile</string>
     <string name="menu_main_log_out">Close Session</string>
 
