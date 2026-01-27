@@ -4,37 +4,34 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import com.cleansound.cleansound.R
-import model.Playlist
+import model.MediaStoreHelper
+import model.Song
 
 class PlaylistActivity : AppCompatActivity() {
 
     private lateinit var ivMenu: ImageView
-    private lateinit var bottomPlayer: FragmentContainerView
     private lateinit var ivPlaylist1: ImageView
     private lateinit var ivPlaylist2: ImageView
     private lateinit var ivPlaylist3: ImageView
-    private lateinit var playlist: Playlist
+
+    private lateinit var miniPlayerController: MiniPlayerController
+
+    private lateinit var mediaStoreHelper: MediaStoreHelper
+    private val allSongs = mutableListOf<Song>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
-        // Aquí recuperas la playlist que enviaste desde MainActivity
-        playlist = intent.getSerializableExtra("playlist") as? Playlist
-            ?: run {
-                // Si no hay playlist, cierra el activity
-                finish()
-                return
-            }
-        // Ahora puedes usar los datos de la playlist
-        title = playlist.name
-        // TODO: Cargar las canciones de esta playlist
-        // TODO: Mostrar el cover, número de canciones, etc.
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.bottomPlayer, MiniPlayerFragment())
-                .commit()
-        }
+
+        // Cargar canciones del teléfono (MediaStore)
+        mediaStoreHelper = MediaStoreHelper(this)
+        allSongs.clear()
+        allSongs.addAll(mediaStoreHelper.getAllSongs())
+
+        // Conectar MiniPlayer
+        miniPlayerController = MiniPlayerController(this)
+        miniPlayerController.bind()
 
         initViews()
         setupListeners()
@@ -42,33 +39,46 @@ class PlaylistActivity : AppCompatActivity() {
 
     private fun initViews() {
         ivMenu = findViewById(R.id.ivMenu)
-        bottomPlayer = findViewById(R.id.bottomPlayer)
         ivPlaylist1 = findViewById(R.id.ivPlaylist1)
         ivPlaylist2 = findViewById(R.id.ivPlaylist2)
         ivPlaylist3 = findViewById(R.id.ivPlaylist3)
     }
 
-    private fun abrirReproductorCompleto() {
-        val intent = Intent(this, NowPlayingActivity::class.java)
-
-        // Datos de prueba (luego los puedes hacer dinámicos)
-        intent.putExtra("SONG_TITLE", "Diosa")
-        intent.putExtra("ARTIST_NAME", "Mareux")
-        intent.putExtra("ALBUM_NAME", "Lovers From The Past")
-
-        startActivity(intent)
-        overridePendingTransition(
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
-        )
-    }
     private fun setupListeners() {
-        ivMenu.setOnClickListener {
-            finish()
+        // Tu botón menú en esta pantalla lo usas como "volver"
+        ivMenu.setOnClickListener { finish() }
+
+        // Al tocar una playlist, reproducimos una cola de ejemplo
+        // (aquí lo dejo simple: reproduce desde un índice distinto para simular 3 playlists)
+
+        ivPlaylist1.setOnClickListener {
+            playFromIndex(0)
         }
 
-        bottomPlayer.setOnClickListener {
-            abrirReproductorCompleto()
+        ivPlaylist2.setOnClickListener {
+            playFromIndex(3)
         }
+
+        ivPlaylist3.setOnClickListener {
+            playFromIndex(6)
+        }
+    }
+
+    private fun playFromIndex(startIndex: Int) {
+        if (allSongs.isEmpty()) return
+
+        val safeIndex = startIndex.coerceIn(0, allSongs.lastIndex)
+        PlaybackManager.setQueue(allSongs.toList(), safeIndex, this)
+        startActivity(Intent(this, NowPlayingActivity::class.java))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        miniPlayerController.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        miniPlayerController.stop()
     }
 }

@@ -1,36 +1,32 @@
 package com.cleansound.cleansound.controller
 
-import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.cleansound.cleansound.R
 
-class NowPlayingActivity : AppCompatActivity() {
+class NowPlayingActivity : AppCompatActivity(), PlaybackManager.Listener {
 
     private lateinit var ivAlbumArt: ImageView
     private lateinit var tvSongTitle: TextView
     private lateinit var tvArtist: TextView
     private lateinit var tvToolbarTitle: TextView
+
     private lateinit var btnFavorite: ImageButton
     private lateinit var btnPlayPause: ImageButton
     private lateinit var btnNext: ImageButton
     private lateinit var btnPrevious: ImageButton
     private lateinit var btnBack: ImageButton
+
     private lateinit var seekBar: SeekBar
     private lateinit var tvCurrentTime: TextView
     private lateinit var tvTotalTime: TextView
 
-    private var mediaPlayer: MediaPlayer? = null
-    private var isPlaying = false
-    private var isFavorite = false
-    private val handler = Handler(Looper.getMainLooper())
+    private var userSeeking = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +34,9 @@ class NowPlayingActivity : AppCompatActivity() {
 
         initViews()
         setupListeners()
-        setupMediaPlayer()
-        updateSeekBar()
+
+        // Render inicial (por si ya hay canción reproduciéndose)
+        render(PlaybackManager.getState())
     }
 
     private fun initViews() {
@@ -47,178 +44,125 @@ class NowPlayingActivity : AppCompatActivity() {
         tvSongTitle = findViewById(R.id.tvSongTitle)
         tvArtist = findViewById(R.id.tvArtist)
         tvToolbarTitle = findViewById(R.id.tvToolbarTitle)
+
         btnFavorite = findViewById(R.id.btnFavorite)
         btnPlayPause = findViewById(R.id.btnPlayPause)
         btnNext = findViewById(R.id.btnNext)
         btnPrevious = findViewById(R.id.btnPrevious)
         btnBack = findViewById(R.id.btnBack)
+
         seekBar = findViewById(R.id.seekBar)
         tvCurrentTime = findViewById(R.id.tvCurrentTime)
         tvTotalTime = findViewById(R.id.tvTotalTime)
-
-        // Obtener datos de la canción desde el Intent
-        val songTitle = intent.getStringExtra("SONG_TITLE") ?: "Diosa"
-        val artistName = intent.getStringExtra("ARTIST_NAME") ?: "Mareux"
-        val songPath = intent.getStringExtra("SONG_PATH")
-
-        tvSongTitle.text = songTitle
-        tvArtist.text = artistName
-        tvToolbarTitle.text = "REPRODUCIENDO $songTitle ($artistName)"
-
-        // Habilitar marquee para el título si es muy largo
-        tvSongTitle.isSelected = true
     }
 
     private fun setupListeners() {
-        btnBack.setOnClickListener {
-            finish()
-        }
+        btnBack.setOnClickListener { finish() }
 
         btnPlayPause.setOnClickListener {
-            togglePlayPause()
+            PlaybackManager.togglePlayPause()
         }
 
         btnNext.setOnClickListener {
-            playNextSong()
+            PlaybackManager.next(this)
         }
 
         btnPrevious.setOnClickListener {
-            playPreviousSong()
+            PlaybackManager.previous(this)
         }
 
+        // Favorito: toggle visual simple
         btnFavorite.setOnClickListener {
-            toggleFavorite()
+            val selected = btnFavorite.tag as? Boolean ?: false
+            val newState = !selected
+            btnFavorite.tag = newState
+            btnFavorite.setImageResource(
+                if (newState) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+            )
         }
 
+        // SeekBar en MILISEGUNDOS (no porcentaje)
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    mediaPlayer?.let {
-                        val newPosition = (it.duration * progress) / 100
-                        it.seekTo(newPosition)
-                        tvCurrentTime.text = formatTime(newPosition)
-                    }
-                }
+            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {}
+
+            override fun onStartTrackingTouch(sb: SeekBar?) {
+                userSeeking = true
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(sb: SeekBar?) {
+                userSeeking = false
+                val targetMs = sb?.progress ?: 0
+                PlaybackManager.seekTo(targetMs)
+            }
         })
     }
 
-    private fun setupMediaPlayer() {
-        // Aquí debes inicializar tu MediaPlayer con la canción actual
-        val songPath = intent.getStringExtra("SONG_PATH")
-
-        try {
-            mediaPlayer = MediaPlayer().apply {
-                // Puedes usar setDataSource con la ruta del archivo
-                // setDataSource(songPath)
-
-                // O usar un recurso raw para pruebas
-                // val afd = resources.openRawResourceFd(R.raw.sample_song)
-                // setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                // afd.close()
-
-                prepare()
-
-                setOnCompletionListener {
-                    playNextSong()
-                }
-            }
-
-            // Configurar la duración total
-            tvTotalTime.text = formatTime(mediaPlayer?.duration ?: 0)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    override fun onStart() {
+        super.onStart()
+        PlaybackManager.addListener(this)
     }
 
-    private fun togglePlayPause() {
-        mediaPlayer?.let {
-            if (isPlaying) {
-                it.pause()
-                btnPlayPause.setImageResource(R.drawable.ic_play_arrow)
-            } else {
-                it.start()
-                btnPlayPause.setImageResource(R.drawable.ic_pause)
-            }
-            isPlaying = !isPlaying
-        }
+    override fun onStop() {
+        super.onStop()
+        PlaybackManager.removeListener(this)
     }
 
-    private fun toggleFavorite() {
-        isFavorite = !isFavorite
-        if (isFavorite) {
-            btnFavorite.setImageResource(R.drawable.ic_favorite)
-            btnFavorite.setColorFilter(
-                ContextCompat.getColor(this, android.R.color.holo_red_light)
-            )
-        } else {
-            btnFavorite.setImageResource(R.drawable.ic_favorite_border)
-            btnFavorite.setColorFilter(
-                ContextCompat.getColor(this, android.R.color.darker_gray)
-            )
-        }
-        // Aquí puedes guardar el estado en tu base de datos o SharedPreferences
+    override fun onStateChanged(state: PlaybackManager.State) {
+        render(state)
     }
 
-    private fun playNextSong() {
-        // Implementa la lógica para reproducir la siguiente canción
-        // Esto dependerá de cómo gestiones tu lista de reproducción
-    }
-
-    private fun playPreviousSong() {
-        // Implementa la lógica para reproducir la canción anterior
-        // O reiniciar la canción actual si ya pasaron más de 3 segundos
-        mediaPlayer?.let {
-            if (it.currentPosition > 3000) {
-                it.seekTo(0)
-            } else {
-                // Reproducir canción anterior de la lista
-            }
-        }
-    }
-
-    private fun updateSeekBar() {
-        mediaPlayer?.let {
-            if (it.isPlaying) {
-                val currentPosition = it.currentPosition
-                val duration = it.duration
-
-                seekBar.progress = if (duration > 0) {
-                    (currentPosition * 100) / duration
-                } else {
-                    0
-                }
-
-                tvCurrentTime.text = formatTime(currentPosition)
-            }
-        }
-
-        handler.postDelayed({ updateSeekBar() }, 100)
-    }
-
-    private fun formatTime(milliseconds: Int): String {
-        val seconds = (milliseconds / 1000) % 60
-        val minutes = (milliseconds / (1000 * 60)) % 60
-        return String.format("%d:%02d", minutes, seconds)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacksAndMessages(null)
-        mediaPlayer?.release()
-        mediaPlayer = null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (isPlaying) {
-            mediaPlayer?.pause()
-            isPlaying = false
+    private fun render(state: PlaybackManager.State) {
+        if (!state.hasSong) {
+            tvSongTitle.text = "Sin reproducción"
+            tvArtist.text = ""
+            tvToolbarTitle.text = "REPRODUCIENDO"
             btnPlayPause.setImageResource(R.drawable.ic_play_arrow)
+
+            seekBar.max = 1
+            seekBar.progress = 0
+            tvCurrentTime.text = "0:00"
+            tvTotalTime.text = "0:00"
+            ivAlbumArt.setImageResource(R.drawable.mareux)
+            return
         }
+
+        tvSongTitle.text = state.title
+        tvArtist.text = state.artist
+        tvToolbarTitle.text = "REPRODUCIENDO ${state.title} (${state.artist})"
+
+        btnPlayPause.setImageResource(
+            if (state.isPlaying) R.drawable.ic_pause else R.drawable.ic_play_arrow
+        )
+
+        val safeDur = state.durationMs.coerceAtLeast(1)
+        seekBar.max = safeDur
+
+        if (!userSeeking) {
+            seekBar.progress = state.positionMs.coerceIn(0, safeDur)
+        }
+
+        tvCurrentTime.text = formatTime(state.positionMs)
+        tvTotalTime.text = formatTime(state.durationMs)
+
+        // ✅ CORRECCIÓN: evitar "Any" (NO usar Elvis con drawable)
+        val song = PlaybackManager.getCurrentSong()
+        val artUri = song?.albumArtUri
+
+        if (!artUri.isNullOrBlank()) {
+            try {
+                ivAlbumArt.setImageURI(Uri.parse(artUri))
+            } catch (_: Exception) {
+                ivAlbumArt.setImageResource(R.drawable.mareux)
+            }
+        } else {
+            ivAlbumArt.setImageResource(R.drawable.mareux)
+        }
+    }
+
+    private fun formatTime(ms: Int): String {
+        val totalSeconds = (ms / 1000).coerceAtLeast(0)
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return String.format("%d:%02d", minutes, seconds)
     }
 }

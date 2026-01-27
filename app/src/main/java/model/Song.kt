@@ -1,6 +1,5 @@
 package model
 
-import android.R.attr.duration
 import java.io.Serializable
 import java.util.Locale
 
