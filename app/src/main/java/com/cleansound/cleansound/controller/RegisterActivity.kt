@@ -6,6 +6,7 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var editTextRepeatPassword: EditText
     lateinit var buttonRegister: Button
     lateinit var textViewIniciarSesion: TextView
+    lateinit var buttonBackRegister: ImageButton
     private lateinit var auth: FirebaseAuth;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +29,15 @@ class RegisterActivity : AppCompatActivity() {
         editTextEmail = findViewById(R.id.etCorreo)
         editTextPassword = findViewById(R.id.etPassword)
         editTextRepeatPassword = findViewById(R.id.etRepeatPassword)
+        buttonBackRegister = findViewById(R.id.btnBackRegister)
         buttonRegister = findViewById(R.id.btnRegistrarse)
         textViewIniciarSesion = findViewById(R.id.tvIniciarSesion)
         auth = Firebase.auth
+        buttonBackRegister.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         buttonRegister.setOnClickListener {
             val email = editTextEmail.text.toString()
             val password = editTextPassword.text.toString()
