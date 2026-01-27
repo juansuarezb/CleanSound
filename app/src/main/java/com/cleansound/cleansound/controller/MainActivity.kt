@@ -3,6 +3,7 @@ package com.cleansound.cleansound.controller
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -21,13 +22,11 @@ import model.Song
 import com.cleansound.cleansound.controller.SongAdapter
 import com.google.firebase.auth.FirebaseAuth
 
-
 class MainActivity : AppCompatActivity() {
 
     // RecyclerViews
     private lateinit var rvPlaylists: RecyclerView
     private lateinit var rvBiblioteca: RecyclerView
-
 
     // MediaStore
     private lateinit var mediaStoreHelper: MediaStoreHelper
@@ -62,12 +61,14 @@ class MainActivity : AppCompatActivity() {
         textViewBiblioteca = findViewById(R.id.tVBiblioteca)
         textViewPlaylists = findViewById(R.id.tVPlaylists)
         imageButtonMenu = findViewById(R.id.iBMenuHamburguesa)
+
         // Inicializar RecyclerViews
         rvPlaylists = findViewById(R.id.rvPlaylists)
         rvBiblioteca = findViewById(R.id.rvBiblioteca)
 
         // Configurar RecyclerView de Playlists
         setupPlaylistsRecyclerView()
+
         imageButtonMenu.setOnClickListener {
             showPopupMenu(it)
         }
@@ -83,14 +84,17 @@ class MainActivity : AppCompatActivity() {
         }
         rvBiblioteca.adapter = songAdapter
         checkAndRequestPermission()
+
         textViewBiblioteca.setOnClickListener {
             val intent = Intent(this, LibraryActivity::class.java)
             startActivity(intent)
         }
+
         textViewBiblioteca.setOnClickListener {
             val intent = Intent(this, LibraryActivity::class.java)
             startActivity(intent)
         }
+
         textViewPlaylists.setOnClickListener {
             val intent = Intent(this, PlaylistActivity::class.java)
             startActivity(intent)
@@ -114,8 +118,6 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-
-        // TODO: Aquí irá tu adapter de playlists cuando lo implementes
     }
 
     private fun checkAndRequestPermission() {
@@ -144,15 +146,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun onSongClick(song: Song) {
-        // Por ahora solo mostramos un Toast
-        Toast.makeText(
-            this,
-            "Seleccionaste: ${song.title}",
-            Toast.LENGTH_SHORT
-        ).show()
+        val songUri = try {
+            Uri.parse(song.uri)
+        } catch (e: Exception) {
+            Toast.makeText(this, "URI de canción no válida", Toast.LENGTH_SHORT).show()
+            return
+        }
+        // Reproducir la canción
+        MusicPlayerManager.playSong(this, songUri)
+        // Abrir el reproductor completo
+        val intent = Intent(this, NowPlayingActivity::class.java)
+        startActivity(intent)
+
     }
 
     private fun showPopupMenu(anchor: View) {
@@ -165,7 +171,6 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-
                 R.id.action_salir -> {
                     // Cerrar sesión
                     cerrarSesion()
@@ -177,12 +182,11 @@ class MainActivity : AppCompatActivity() {
         }
         popupMenu.show()
     }
+
     private fun cerrarSesion() {
         FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
-
-
 }
