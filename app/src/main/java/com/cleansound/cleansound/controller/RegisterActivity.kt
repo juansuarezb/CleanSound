@@ -18,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var editTextPassword: EditText
     lateinit var editTextRepeatPassword: EditText
     lateinit var buttonRegister: Button
+    lateinit var buttonBack: Button
     lateinit var textViewIniciarSesion: TextView
     private lateinit var auth: FirebaseAuth;
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
         editTextRepeatPassword = findViewById(R.id.etRepeatPassword)
         buttonRegister = findViewById(R.id.btnRegistrarse)
         textViewIniciarSesion = findViewById(R.id.tvIniciarSesion)
+        buttonBack = findViewById(R.id.btnBack)
         auth = Firebase.auth
         buttonRegister.setOnClickListener {
             val email = editTextEmail.text.toString()
@@ -44,6 +46,11 @@ class RegisterActivity : AppCompatActivity() {
         textViewIniciarSesion.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+        buttonBack.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
