@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             onSongClick(song)
         }
         rvBiblioteca.adapter = songAdapter
-        cargarCanciones()
+        checkAndRequestPermission()
     }
 
     private fun cargarCanciones() {
