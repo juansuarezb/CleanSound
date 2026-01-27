@@ -14,6 +14,8 @@ import com.cleansound.cleansound.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import service.UserService
+
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var editTextEmail: EditText
@@ -23,6 +25,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var textViewIniciarSesion: TextView
     lateinit var buttonBackRegister: ImageButton
     private lateinit var auth: FirebaseAuth;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -60,27 +63,40 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(EXTRA_LOGIN, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    Toast.makeText(
-                        baseContext, "New user saved.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    //updateUI(user)
+
+                    val firebaseUser = auth.currentUser
+                    if (firebaseUser == null) {
+                        Toast.makeText(baseContext, "Error: usuario nulo.", Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
+                    }
+
+                    val uid = firebaseUser.uid
+                    val username = email.substringBefore("@")
+
+                    UserService.createProfile(
+                        uid = uid,
+                        email = email,
+                        username = username,
+                        onOk = {
+                            Toast.makeText(baseContext, "Perfil creado en Firestore.", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
+                        },
+                        onFail = { e ->
+                            Log.e(EXTRA_LOGIN, "Error creando perfil Firestore", e)
+                            Toast.makeText(baseContext, "Registro ok, pero Firestore falló: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    )
+
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w(EXTRA_LOGIN, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    //updateUI(null)
+                    Toast.makeText(baseContext, task.exception?.message ?: "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
+
             }
     }
+
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser

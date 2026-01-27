@@ -36,6 +36,9 @@ class LoginActivity : AppCompatActivity() {
         buttonCerrar = findViewById(R.id.btnCerrar)
         togglePassword = findViewById(R.id.ivTogglePassword)
         auth = Firebase.auth
+
+        Log.d("FIREBASE_CHECK", "Auth instance: ${FirebaseAuth.getInstance().app.name}")
+
         //Eventos clic
         buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString()
