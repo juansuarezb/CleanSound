@@ -51,8 +51,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
     implementation(libs.firebase.auth)
 
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.firestore.ktx)
