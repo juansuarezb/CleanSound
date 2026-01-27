@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cleansound.cleansound.R
+import androidx.appcompat.view.menu.MenuBuilder
 import model.MediaStoreHelper
 import model.Song
 import com.cleansound.cleansound.controller.SongAdapter
@@ -162,24 +164,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPopupMenu(anchor: View) {
-        val popupMenu = PopupMenu(this, anchor)
+        val popupMenu = PopupMenu(
+            this,
+            anchor,
+            Gravity.END,
+            0,
+            R.style.PopupMenuCleanSound
+        )
+
         popupMenu.menuInflater.inflate(R.menu.menu_main, popupMenu.menu)
+
+        if (popupMenu.menu is MenuBuilder) {
+            (popupMenu.menu as MenuBuilder).setOptionalIconsVisible(true)
+
+        }
 
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_home -> {
-                    true
-                }
-
+                R.id.action_home -> true
                 R.id.action_salir -> {
-                    // Cerrar sesión
                     cerrarSesion()
                     true
                 }
-
                 else -> false
             }
         }
+
         popupMenu.show()
     }
 

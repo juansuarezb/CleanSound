@@ -36,6 +36,10 @@ class LoginActivity : AppCompatActivity() {
         buttonCerrar = findViewById(R.id.btnCerrar)
         togglePassword = findViewById(R.id.ivTogglePassword)
         auth = Firebase.auth
+        val extras = intent.extras ?: return
+        var usuario = extras.getString(EXTRA_LOGIN) ?:"Unknown"
+        usuario = usuario.substringBefore("@")
+        Toast.makeText(this, "Bienvenido $usuario", Toast.LENGTH_SHORT).show()
         //Eventos clic
         buttonLogin.setOnClickListener {
             val email = editTextEmail.text.toString()
